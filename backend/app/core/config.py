@@ -97,6 +97,9 @@ class Settings(BaseSettings):
     injection_check: Literal["off", "basic", "strict"] = "basic"
     chunk_size: int = 800
     chunk_overlap: int = 100
+    top_k_search: int = 50
+    top_k_rerank: int = 20
+    top_k_context: int = 6
 
     # ── Seed admin ───────────────────────────────────────────────────────
     seed_admin_email: str = "admin@boostrag.local"

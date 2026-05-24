@@ -197,5 +197,23 @@
         "error": "Reindex failed."
       }
     }
+  },
+  "chat": {
+    "newChat": "New chat",
+    "loadingSessions": "Loading sessions...",
+    "noSessions": "No conversations yet.",
+    "emptyTitle": "Start a conversation",
+    "emptyHint": "Ask a question about internal documents. Answers stream in real time with citations.",
+    "inputPlaceholder": "Type a question... (Enter to send, Shift+Enter for newline)",
+    "enableDebug": "Enable chunk debug",
+    "debug": "Debug",
+    "debugTitle": "Chunk Debug",
+    "loadingTrace": "Loading trace...",
+    "traceError": "Could not load trace.",
+    "query": "Query",
+    "page": "Page",
+    "usedChunks": "Used chunks",
+    "retrievedChunks": "Retrieved chunks",
+    "retrievedCount": "{retrieved} retrieved, {used} in context"
   }
 }

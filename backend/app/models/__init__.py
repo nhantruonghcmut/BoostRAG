@@ -5,6 +5,7 @@ validators. Naming: PascalCase singular class, snake_case plural table.
 """
 
 from app.models.base import Base
+from app.models.chat import ChatMessage, ChatSession, ChunkTrace, MessageRole
 from app.models.document import Document, DocumentChunk, DocumentStatus
 from app.models.user import (
     Group,
@@ -17,6 +18,10 @@ from app.models.user import (
 
 __all__ = [
     "Base",
+    "ChatMessage",
+    "ChatSession",
+    "ChunkTrace",
+    "MessageRole",
     "Document",
     "DocumentChunk",
     "DocumentStatus",

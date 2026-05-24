@@ -60,6 +60,7 @@ dependencies = [
     "minio>=7.2.9",
     "tiktoken>=0.8.0",
     "langdetect>=1.0.9",
+    "sentence-transformers>=3.0.0",
 ]
 
 [project.optional-dependencies]
@@ -150,7 +151,7 @@ module = ["app.scripts.*"]
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = ["passlib.*", "jose.*", "celery.*", "slowapi.*", "litellm.*", "qdrant_client.*", "minio.*", "magic.*", "langdetect.*", "openpyxl.*"]
+module = ["passlib.*", "jose.*", "celery.*", "slowapi.*", "litellm.*", "qdrant_client.*", "minio.*", "magic.*", "langdetect.*", "openpyxl.*", "sentence_transformers.*"]
 ignore_missing_imports = true
 
 # ─────────────────────────────────────────────────────────────────────────────

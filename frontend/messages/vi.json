@@ -197,5 +197,23 @@
         "error": "Reindex thất bại."
       }
     }
+  },
+  "chat": {
+    "newChat": "Cuộc trò chuyện mới",
+    "loadingSessions": "Đang tải sessions...",
+    "noSessions": "Chưa có cuộc trò chuyện nào.",
+    "emptyTitle": "Bắt đầu trò chuyện",
+    "emptyHint": "Đặt câu hỏi về tài liệu nội bộ. Câu trả lời sẽ stream realtime kèm trích dẫn.",
+    "inputPlaceholder": "Nhập câu hỏi... (Enter gửi, Shift+Enter xuống dòng)",
+    "enableDebug": "Bật debug chunks",
+    "debug": "Debug",
+    "debugTitle": "Chunk Debug",
+    "loadingTrace": "Đang tải trace...",
+    "traceError": "Không tải được trace.",
+    "query": "Câu hỏi",
+    "page": "Trang",
+    "usedChunks": "Chunks đã dùng",
+    "retrievedChunks": "Chunks retrieved",
+    "retrievedCount": "{retrieved} retrieved, {used} đưa vào context"
   }
 }

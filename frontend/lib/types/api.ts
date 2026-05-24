@@ -148,3 +148,92 @@ export class ApiError extends Error {
     this.name = 'ApiError';
   }
 }
+
+// ── Chat (Phase 3) ──────────────────────────────────────────────────────────
+
+export interface Citation {
+  citation_id: number;
+  document_id: string;
+  doc_name: string;
+  page?: number | null;
+}
+
+export interface ChatSessionRead {
+  session_id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ChatSessionListItem {
+  session_id: string;
+  title: string;
+  updated_at: string;
+  message_count: number;
+}
+
+export interface ChatSessionListResponse {
+  items: ChatSessionListItem[];
+  total: number;
+}
+
+export interface ChatMessageRead {
+  message_id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  citations?: Citation[] | null;
+  error_code?: string | null;
+  created_at: string;
+}
+
+export interface ChatMessageListResponse {
+  items: ChatMessageRead[];
+}
+
+export interface ChatStreamRequest {
+  session_id?: string;
+  query: string;
+  include_debug?: boolean;
+}
+
+export interface ChunkTraceChunk {
+  chunk_id: string;
+  document_id: string;
+  document_name: string;
+  text: string;
+  page_number?: number | null;
+  section_path?: string[];
+  heading_context?: string;
+  vector_score?: number;
+  rerank_score?: number | null;
+  citation_id?: number;
+}
+
+export interface ChunkTraceRead {
+  trace_id: string;
+  message_id: string;
+  query: string;
+  embedding_model: string;
+  llm_model: string;
+  retrieved_chunks: ChunkTraceChunk[];
+  used_chunks: ChunkTraceChunk[];
+  final_prompt?: string | null;
+  latency_ms: number;
+  latency_breakdown?: Record<string, number> | null;
+  token_usage?: Record<string, number> | null;
+  created_at: string;
+}
+
+export type ChatStreamEventType =
+  | 'start'
+  | 'token'
+  | 'tool_call'
+  | 'tool_result'
+  | 'citations'
+  | 'done'
+  | 'error';
+
+export interface ChatStreamEvent {
+  type: ChatStreamEventType;
+  data: unknown;
+}
