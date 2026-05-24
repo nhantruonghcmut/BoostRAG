@@ -1,0 +1,201 @@
+name: boostrag
+
+# =============================================================================
+# BoostRAG — Docker Compose (dev)
+# -----------------------------------------------------------------------------
+# Usage:
+#   docker compose up -d              # Khởi động tất cả service
+#   docker compose up -d postgres qdrant redis minio   # Chỉ infra (chạy backend/FE local)
+#   docker compose down               # Stop & remove
+#   docker compose logs -f backend    # Xem log backend
+# =============================================================================
+
+networks:
+  boostrag:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  qdrant_data:
+  redis_data:
+  minio_data:
+
+services:
+  # ── PostgreSQL 16 ──────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: boostrag-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-boostrag}
+      POSTGRES_USER: ${POSTGRES_USER:-boostrag}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-boostrag}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [boostrag]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-boostrag} -d ${POSTGRES_DB:-boostrag}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Qdrant (vector DB) ─────────────────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: boostrag-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"   # HTTP
+      - "6334:6334"   # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks: [boostrag]
+    healthcheck:
+      # Qdrant image không có wget/curl — dùng bash /dev/tcp để check port.
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ── Redis (cache + Celery broker) ──────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: boostrag-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks: [boostrag]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # ── MinIO (S3-compatible object storage) ───────────────────────────────────
+  minio:
+    image: minio/minio:latest
+    container_name: boostrag-minio
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY:-minioadmin}
+    ports:
+      - "9000:9000"   # API
+      - "9001:9001"   # console
+    volumes:
+      - minio_data:/data
+    networks: [boostrag]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ── MinIO init (tạo bucket mặc định, idempotent) ───────────────────────────
+  minio-init:
+    image: minio/mc:latest
+    container_name: boostrag-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks: [boostrag]
+    entrypoint: >
+      /bin/sh -c "
+      set -e;
+      until (mc alias set local http://minio:9000 ${MINIO_ACCESS_KEY:-minioadmin} ${MINIO_SECRET_KEY:-minioadmin}) do
+        echo 'Waiting for MinIO...'; sleep 2;
+      done;
+      mc mb --ignore-existing local/${MINIO_BUCKET:-boostrag-documents};
+      mc anonymous set none local/${MINIO_BUCKET:-boostrag-documents};
+      echo 'MinIO bucket ready';
+      "
+    restart: "no"
+
+  # ── Backend (FastAPI) ──────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    container_name: boostrag-backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-boostrag}:${POSTGRES_PASSWORD:-boostrag}@postgres:5432/${POSTGRES_DB:-boostrag}
+      QDRANT_URL: http://qdrant:6333
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks: [boostrag]
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import urllib.request,sys; sys.exit(0 if urllib.request.urlopen(\"http://localhost:8000/health\").status==200 else 1)' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  # ── Worker (Celery) ────────────────────────────────────────────────────────
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    container_name: boostrag-worker
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-boostrag}:${POSTGRES_PASSWORD:-boostrag}@postgres:5432/${POSTGRES_DB:-boostrag}
+      QDRANT_URL: http://qdrant:6333
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+    volumes:
+      - ./backend:/app
+    depends_on:
+      backend:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks: [boostrag]
+    command: ["celery", "-A", "app.workers.celery_app", "worker", "--loglevel=info"]
+
+  # ── Frontend (Next.js dev) ─────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    container_name: boostrag-frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000/api/v1}
+      NEXT_PUBLIC_APP_NAME: ${NEXT_PUBLIC_APP_NAME:-BoostRAG}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      backend:
+        condition: service_started
+    networks: [boostrag]
+    command: ["pnpm", "dev"]

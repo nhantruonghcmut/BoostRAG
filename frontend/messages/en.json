@@ -1,0 +1,118 @@
+{
+  "common": {
+    "appName": "BoostRAG",
+    "tagline": "Enterprise RAG — secure, multi-LLM, debuggable.",
+    "login": "Log in",
+    "register": "Sign up",
+    "logout": "Log out",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "back": "Back",
+    "language": "Language",
+    "comingSoon": "Coming soon — available in the next phase.",
+    "dashboard": "Dashboard",
+    "chat": "Chat"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "docs": "Docs",
+    "github": "GitHub"
+  },
+  "marketing": {
+    "hero": {
+      "title": "Enterprise RAG with document-level access control",
+      "subtitle": "BoostRAG lets your organization chat with internal knowledge, with tight level+group permissions, multi-provider LLMs, and transparent debugging of which chunks shaped each answer.",
+      "ctaPrimary": "Get started",
+      "ctaSecondary": "Log in"
+    },
+    "features": {
+      "title": "Everything you need for enterprise RAG",
+      "subtitle": "One unified codebase — no need to stitch multiple services together.",
+      "adminPortal": {
+        "title": "Admin portal",
+        "desc": "Upload, assign permissions by level + group, manage users and LLM providers."
+      },
+      "multiLLM": {
+        "title": "Multi-provider LLM",
+        "desc": "OpenAI, Google Gemini, Ollama, Anthropic, Azure — swap via LiteLLM."
+      },
+      "acl": {
+        "title": "Payload-level ACL",
+        "desc": "Qdrant vector store filters by level + groups at query time — no chunk leakage."
+      },
+      "functionCalling": {
+        "title": "Function calling",
+        "desc": "Configure tools in the UI, call external APIs safely with SSRF protection."
+      },
+      "debug": {
+        "title": "Transparent debug",
+        "desc": "See which chunks generated the answer, plus latency for every step."
+      },
+      "i18n": {
+        "title": "Multilingual",
+        "desc": "UI in Vietnamese + English, multilingual reranker baked in."
+      }
+    },
+    "cta": {
+      "title": "Ready to upgrade your internal RAG?",
+      "subtitle": "Sign up to try — your organization's admin will approve before granting document access.",
+      "button": "Create account"
+    },
+    "footer": {
+      "tagline": "Open source. Configurable. Security first.",
+      "rights": "© 2026 BoostRAG. All rights reserved."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "subtitle": "Enter your email and password to access the system.",
+      "submit": "Log in",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Sign up",
+      "forgotPassword": "Forgot password?",
+      "success": "Logged in successfully."
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Your account will be pending until an admin approves it.",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "success": "Account created. Please wait for admin approval.",
+      "passwordHint": "Minimum 10 characters, must contain letters and digits."
+    },
+    "errors": {
+      "invalidCredentials": "Wrong email or password.",
+      "pendingApproval": "Account is pending admin approval.",
+      "accountLocked": "Account is temporarily locked. Please try again later.",
+      "accountDisabled": "Account has been disabled.",
+      "emailExists": "Email already registered.",
+      "passwordTooWeak": "Password is too weak.",
+      "generic": "Something went wrong. Please try again.",
+      "network": "Cannot reach the server."
+    }
+  },
+  "validation": {
+    "email": {
+      "required": "Email is required.",
+      "invalid": "Invalid email."
+    },
+    "password": {
+      "required": "Password is required.",
+      "minLength": "Password must be at least 10 characters.",
+      "needLetter": "Password must contain at least 1 letter.",
+      "needDigit": "Password must contain at least 1 digit."
+    },
+    "fullName": {
+      "required": "Full name is required.",
+      "maxLength": "Full name cannot exceed 150 characters."
+    }
+  }
+}

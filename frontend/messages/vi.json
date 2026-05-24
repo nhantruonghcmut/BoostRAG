@@ -1,0 +1,118 @@
+{
+  "common": {
+    "appName": "BoostRAG",
+    "tagline": "Hệ thống RAG doanh nghiệp — bảo mật, đa LLM, có thể debug.",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "fullName": "Họ và tên",
+    "submit": "Gửi",
+    "cancel": "Huỷ",
+    "loading": "Đang tải...",
+    "saving": "Đang lưu...",
+    "back": "Quay lại",
+    "language": "Ngôn ngữ",
+    "comingSoon": "Đang phát triển — sẽ có ở phase tiếp theo.",
+    "dashboard": "Bảng điều khiển",
+    "chat": "Trò chuyện"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "features": "Tính năng",
+    "docs": "Tài liệu",
+    "github": "GitHub"
+  },
+  "marketing": {
+    "hero": {
+      "title": "RAG doanh nghiệp — bảo mật theo từng cấp độ tài liệu",
+      "subtitle": "BoostRAG cho phép tổ chức của bạn chat với tri thức nội bộ, có phân quyền chặt chẽ theo level + group, đa nhà cung cấp LLM, và xem được chunks nào tạo nên câu trả lời.",
+      "ctaPrimary": "Bắt đầu miễn phí",
+      "ctaSecondary": "Đăng nhập"
+    },
+    "features": {
+      "title": "Mọi thứ cần thiết cho RAG cấp doanh nghiệp",
+      "subtitle": "Một codebase hợp nhất — không cần ghép nối nhiều dịch vụ.",
+      "adminPortal": {
+        "title": "Cổng quản trị",
+        "desc": "Upload, phân quyền theo level + group, quản lý user và LLM provider."
+      },
+      "multiLLM": {
+        "title": "Đa nhà cung cấp LLM",
+        "desc": "OpenAI, Google Gemini, Ollama, Anthropic, Azure — chuyển đổi qua LiteLLM."
+      },
+      "acl": {
+        "title": "ACL theo payload",
+        "desc": "Vector store Qdrant filter theo level + groups ngay tại query — không leak chunks."
+      },
+      "functionCalling": {
+        "title": "Function calling",
+        "desc": "Cấu hình tool qua UI, gọi API ngoài an toàn với chống SSRF."
+      },
+      "debug": {
+        "title": "Debug minh bạch",
+        "desc": "Xem các chunks được dùng để generate câu trả lời, cùng latency từng bước."
+      },
+      "i18n": {
+        "title": "Đa ngôn ngữ",
+        "desc": "Giao diện hỗ trợ Tiếng Việt + English, reranker multilingual."
+      }
+    },
+    "cta": {
+      "title": "Sẵn sàng nâng cấp RAG nội bộ?",
+      "subtitle": "Đăng ký tài khoản dùng thử — admin của tổ chức sẽ duyệt trước khi bạn truy cập tài liệu.",
+      "button": "Tạo tài khoản"
+    },
+    "footer": {
+      "tagline": "Mã nguồn mở. Cấu hình linh hoạt. Bảo mật ưu tiên.",
+      "rights": "© 2026 BoostRAG. Đã đăng ký bản quyền."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Đăng nhập",
+      "subtitle": "Nhập email và mật khẩu để vào hệ thống.",
+      "submit": "Đăng nhập",
+      "noAccount": "Chưa có tài khoản?",
+      "registerLink": "Đăng ký ngay",
+      "forgotPassword": "Quên mật khẩu?",
+      "success": "Đăng nhập thành công."
+    },
+    "register": {
+      "title": "Tạo tài khoản",
+      "subtitle": "Tài khoản sẽ chờ admin duyệt trước khi sử dụng được.",
+      "submit": "Tạo tài khoản",
+      "haveAccount": "Đã có tài khoản?",
+      "loginLink": "Đăng nhập",
+      "success": "Tài khoản đã được tạo. Vui lòng chờ admin duyệt.",
+      "passwordHint": "Tối thiểu 10 ký tự, có chữ và số."
+    },
+    "errors": {
+      "invalidCredentials": "Email hoặc mật khẩu không đúng.",
+      "pendingApproval": "Tài khoản chưa được admin duyệt.",
+      "accountLocked": "Tài khoản đang bị khoá tạm thời. Vui lòng thử lại sau.",
+      "accountDisabled": "Tài khoản đã bị vô hiệu hoá.",
+      "emailExists": "Email đã được đăng ký.",
+      "passwordTooWeak": "Mật khẩu chưa đủ mạnh.",
+      "generic": "Có lỗi xảy ra. Vui lòng thử lại.",
+      "network": "Không kết nối được tới máy chủ."
+    }
+  },
+  "validation": {
+    "email": {
+      "required": "Vui lòng nhập email.",
+      "invalid": "Email không hợp lệ."
+    },
+    "password": {
+      "required": "Vui lòng nhập mật khẩu.",
+      "minLength": "Mật khẩu cần tối thiểu 10 ký tự.",
+      "needLetter": "Mật khẩu cần ít nhất 1 chữ cái.",
+      "needDigit": "Mật khẩu cần ít nhất 1 chữ số."
+    },
+    "fullName": {
+      "required": "Vui lòng nhập họ tên.",
+      "maxLength": "Họ tên không quá 150 ký tự."
+    }
+  }
+}

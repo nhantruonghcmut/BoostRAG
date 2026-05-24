@@ -1,0 +1,103 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# BoostRAG .gitignore
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Local docs & agent artifacts (not in remote repo) ─────────────────────────
+docs/
+AGENTS.md
+.cursor/
+artifacts/
+
+# ── Secrets & env ────────────────────────────────────────────────────────────
+.env
+.env.*
+.env.example
+*.pem
+*.key
+secrets/
+.detect-secrets.baseline.local
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+.tox/
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ── Node / Next.js ───────────────────────────────────────────────────────────
+node_modules/
+.pnp/
+.pnp.js
+.yarn/
+.next/
+out/
+.turbo/
+.cache/
+.parcel-cache/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.npm
+.eslintcache
+.tsbuildinfo
+
+# ── Test / coverage (frontend) ────────────────────────────────────────────────
+coverage/
+.vitest/
+playwright-report/
+test-results/
+
+# ── IDE / editor ─────────────────────────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.shared.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Docker / data volumes (nếu mount local) ──────────────────────────────────
+docker-data/
+*.sqlite3
+*.db
+
+# ── Markdown (except root README.md) ─────────────────────────────────────────
+**/README.md
+!README.md
+backend/**/*.md
+frontend/**/*.md
+
+# ── Misc ─────────────────────────────────────────────────────────────────────
+*.bak
+*.orig
+*.tmp
+.history/
