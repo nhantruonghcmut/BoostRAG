@@ -136,7 +136,9 @@ async def _register_failed_attempt(db: AsyncSession, user: User) -> None:
     user.failed_login_count = (user.failed_login_count or 0) + 1
     if user.failed_login_count >= settings.max_failed_login_attempts:
         user.status = UserStatus.LOCKED
-        user.locked_until = datetime.now(tz=UTC) + timedelta(minutes=settings.account_lock_minutes)
+        user.locked_until = datetime.now(tz=UTC) + timedelta(
+            minutes=settings.account_lock_minutes
+        )
         logger.warning(
             "auth.lockout",
             user_id=str(user.id),

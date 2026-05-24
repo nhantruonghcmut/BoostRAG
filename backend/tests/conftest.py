@@ -16,7 +16,9 @@ import pytest
 os.environ.setdefault("APP_ENV", "test")
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 os.environ.setdefault("JWT_SECRET", "test-jwt-secret-for-unit-tests")
-os.environ.setdefault("MASTER_KEY", "changeme-base64-fernet-key-44-chars-replace-this==")
+os.environ.setdefault(
+    "MASTER_KEY", "changeme-base64-fernet-key-44-chars-replace-this=="
+)
 
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import event
@@ -29,9 +31,11 @@ from sqlalchemy.pool import StaticPool
 
 from app.core.deps import get_db
 from app.core.security import hash_password
+from app.core.storage import InMemoryStorage
 from app.main import create_app
 from app.models.base import Base
 from app.models.user import User, UserRole, UserStatus
+from app.rag.retrieval.vector_store import InMemoryVectorStore
 
 TEST_DB_URL = os.environ["DATABASE_URL"]
 
@@ -46,7 +50,9 @@ async def engine() -> AsyncIterator[Any]:
         TEST_DB_URL,
         echo=False,
         future=True,
-        connect_args={"check_same_thread": False} if TEST_DB_URL.startswith("sqlite") else {},
+        connect_args={"check_same_thread": False}
+        if TEST_DB_URL.startswith("sqlite")
+        else {},
         poolclass=StaticPool if TEST_DB_URL.startswith("sqlite") else None,
     )
 
@@ -89,6 +95,18 @@ async def client(db: AsyncSession) -> AsyncIterator[AsyncClient]:
         yield ac
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def in_memory_storage() -> InMemoryStorage:
+    """Shared in-memory MinIO mock."""
+    return InMemoryStorage()
+
+
+@pytest.fixture
+def in_memory_vector_store() -> InMemoryVectorStore:
+    """Shared in-memory Qdrant mock."""
+    return InMemoryVectorStore()
 
 
 # ── User fixtures ───────────────────────────────────────────────────────────

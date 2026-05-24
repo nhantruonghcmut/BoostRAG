@@ -94,7 +94,7 @@ Hoặc chạy toàn bộ stack: `docker compose up -d` (hoặc `make up` / `./ta
 
 - [x] Phase 0: Repo setup, Docker Compose
 - [x] Phase 1: Auth, RBAC, Landing, Login/Register UI
-- [ ] Phase 2: Document ingestion + Admin doc management
+- [x] Phase 2: Document ingestion + Admin doc management
 - [ ] Phase 3: RAG engine + Chat UI + Streaming
 - [ ] Phase 4: Guardrails + Function calling
 - [ ] Phase 5: Debug panel + Admin debug console

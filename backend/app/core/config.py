@@ -89,11 +89,14 @@ class Settings(BaseSettings):
     # ── RAG defaults ─────────────────────────────────────────────────────
     default_embedding_provider: str = "openai"
     default_embedding_model: str = "text-embedding-3-small"
+    qdrant_collection: str | None = None  # auto-derived nếu None
     default_llm_provider: str = "openai"
     default_llm_model: str = "gpt-4o-mini"
     default_reranker_model: str = "BAAI/bge-reranker-v2-m3"
     llm_timeout_s: int = 60
     injection_check: Literal["off", "basic", "strict"] = "basic"
+    chunk_size: int = 800
+    chunk_overlap: int = 100
 
     # ── Seed admin ───────────────────────────────────────────────────────
     seed_admin_email: str = "admin@boostrag.local"
@@ -125,6 +128,29 @@ class Settings(BaseSettings):
     def is_test(self) -> bool:
         """True nếu chạy test suite."""
         return self.app_env == "test"
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def qdrant_collection_name(self) -> str:
+        """Qdrant collection name derived from embedding model.
+
+        Format: ``boostrag_<provider>_<model_slug>`` — vd ``boostrag_openai_emb3small``.
+        """
+        if self.qdrant_collection:
+            return self.qdrant_collection
+        model_slug = (
+            self.default_embedding_model.replace("text-embedding-", "emb")
+            .replace("-", "")
+            .replace(".", "")
+            .lower()
+        )
+        return f"boostrag_{self.default_embedding_provider}_{model_slug}"
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def max_file_size_bytes(self) -> int:
+        """Max upload size in bytes."""
+        return self.max_file_size_mb * 1024 * 1024
 
 
 @lru_cache(maxsize=1)

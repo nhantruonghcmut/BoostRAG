@@ -25,7 +25,9 @@ class AppError(Exception):
     code: str = "INTERNAL_ERROR"
     http_status: int = 500
 
-    def __init__(self, message: str = "", details: dict[str, Any] | None = None) -> None:
+    def __init__(
+        self, message: str = "", details: dict[str, Any] | None = None
+    ) -> None:
         self.message = message or self.__class__.__name__
         self.details: dict[str, Any] = details or {}
         super().__init__(self.message)

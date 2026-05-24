@@ -30,7 +30,12 @@ class TestAccessToken:
 
     def test_decode_rejects_invalid_signature(self) -> None:
         token = jwt.encode(
-            {"sub": "x", "role": "user", "type": "access", "exp": int(time.time()) + 60},
+            {
+                "sub": "x",
+                "role": "user",
+                "type": "access",
+                "exp": int(time.time()) + 60,
+            },
             "wrong-secret",
             algorithm=settings.jwt_algorithm,
         )

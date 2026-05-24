@@ -73,6 +73,68 @@ export interface ApiErrorResponse {
   error: ApiErrorPayload;
 }
 
+export type DocumentStatus =
+  | 'PENDING'
+  | 'PARSING'
+  | 'CHUNKING'
+  | 'EMBEDDING'
+  | 'READY'
+  | 'FAILED';
+
+export interface DocumentSummary {
+  document_id: string;
+  name: string;
+  size_bytes: number;
+  uploaded_at: string;
+  status: DocumentStatus;
+  required_level: number;
+  allowed_groups: string[];
+}
+
+export interface DocumentRead extends DocumentSummary {
+  original_filename: string;
+  mime_type: string;
+  chunk_count: number;
+  error_message: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DocumentListResponse {
+  items: DocumentSummary[];
+  total: number;
+}
+
+export interface UploadDocumentResponse {
+  document_id: string;
+  status: DocumentStatus;
+}
+
+export interface UpdateDocumentAclRequest {
+  required_level: number;
+  allowed_groups: string[];
+}
+
+export interface ReindexDocumentResponse {
+  document_id: string;
+  status: DocumentStatus;
+}
+
+export const PROCESSING_DOCUMENT_STATUSES: readonly DocumentStatus[] = [
+  'PENDING',
+  'PARSING',
+  'CHUNKING',
+  'EMBEDDING',
+] as const;
+
+export function normalizeDocumentStatus(status: string): DocumentStatus {
+  return status.toUpperCase() as DocumentStatus;
+}
+
+export function isProcessingDocumentStatus(status: DocumentStatus): boolean {
+  return (PROCESSING_DOCUMENT_STATUSES as readonly string[]).includes(status);
+}
+
 export class ApiError extends Error {
   code: string;
   status: number;

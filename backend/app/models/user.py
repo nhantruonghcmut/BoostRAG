@@ -72,12 +72,16 @@ class User(UUIDPKMixin, TimestampMixin, Base):
 
     __tablename__ = "users"
 
-    email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
+    email: Mapped[str] = mapped_column(
+        String(255), unique=True, nullable=False, index=True
+    )
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     full_name: Mapped[str] = mapped_column(String(150), nullable=False)
 
     role: Mapped[UserRole] = mapped_column(
-        SAEnum(UserRole, name="user_role", values_callable=lambda x: [m.value for m in x]),
+        SAEnum(
+            UserRole, name="user_role", values_callable=lambda x: [m.value for m in x]
+        ),
         default=UserRole.USER,
         nullable=False,
     )
@@ -94,8 +98,12 @@ class User(UUIDPKMixin, TimestampMixin, Base):
     )
 
     failed_login_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
-    last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    locked_until: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    last_login_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
 
     groups: Mapped[list[Group]] = relationship(
         "Group",
@@ -113,7 +121,9 @@ class Group(UUIDPKMixin, TimestampMixin, Base):
 
     __tablename__ = "groups"
 
-    name: Mapped[str] = mapped_column(String(100), unique=True, nullable=False, index=True)
+    name: Mapped[str] = mapped_column(
+        String(100), unique=True, nullable=False, index=True
+    )
     description: Mapped[str | None] = mapped_column(String(500), nullable=True)
 
     users: Mapped[list[User]] = relationship(
@@ -142,9 +152,13 @@ class RevokedToken(Base):
         nullable=False,
         index=True,
     )
-    revoked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    revoked_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False
+    )
     expires_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, index=True
     )
     reason: Mapped[str | None] = mapped_column(String(100), nullable=True)
-    is_used_for_replay: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    is_used_for_replay: Mapped[bool] = mapped_column(
+        Boolean, default=False, nullable=False
+    )

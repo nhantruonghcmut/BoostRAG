@@ -23,7 +23,9 @@ class TestRegisterFlow:
         assert body["status"] == "pending_approval"
         assert body["message"]
 
-    async def test_register_rejects_duplicate(self, client: AsyncClient, active_user: User) -> None:
+    async def test_register_rejects_duplicate(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         resp = await client.post(
             "/api/v1/auth/register",
             json={
@@ -45,7 +47,9 @@ class TestRegisterFlow:
 
 
 class TestLoginFlow:
-    async def test_pending_user_cannot_login(self, client: AsyncClient, pending_user: User) -> None:
+    async def test_pending_user_cannot_login(
+        self, client: AsyncClient, pending_user: User
+    ) -> None:
         resp = await client.post(
             "/api/v1/auth/login",
             json={"email": pending_user.email, "password": "PendingPass123"},
@@ -53,7 +57,9 @@ class TestLoginFlow:
         assert resp.status_code == 403
         assert resp.json()["error"]["code"] == "AUTH_PENDING_APPROVAL"
 
-    async def test_active_user_logs_in(self, client: AsyncClient, active_user: User) -> None:
+    async def test_active_user_logs_in(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         resp = await client.post(
             "/api/v1/auth/login",
             json={"email": active_user.email, "password": "UserPass123"},
@@ -67,7 +73,9 @@ class TestLoginFlow:
         # Refresh token set via cookie
         assert "refresh_token" in resp.cookies
 
-    async def test_login_wrong_password(self, client: AsyncClient, active_user: User) -> None:
+    async def test_login_wrong_password(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         resp = await client.post(
             "/api/v1/auth/login",
             json={"email": active_user.email, "password": "WrongPass123"},
@@ -82,7 +90,9 @@ class TestMeEndpoint:
         # FastAPI HTTPBearer trả 403 (older) hoặc 401 (newer) khi thiếu credentials
         assert resp.status_code in {401, 403}
 
-    async def test_me_returns_user_info(self, client: AsyncClient, active_user: User) -> None:
+    async def test_me_returns_user_info(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         login = await client.post(
             "/api/v1/auth/login",
             json={"email": active_user.email, "password": "UserPass123"},
@@ -100,7 +110,9 @@ class TestMeEndpoint:
 
 
 class TestRefreshFlow:
-    async def test_refresh_rotates_token(self, client: AsyncClient, active_user: User) -> None:
+    async def test_refresh_rotates_token(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         login = await client.post(
             "/api/v1/auth/login",
             json={"email": active_user.email, "password": "UserPass123"},
@@ -134,7 +146,9 @@ class TestRefreshFlow:
 
 
 class TestLogoutFlow:
-    async def test_logout_revokes_refresh(self, client: AsyncClient, active_user: User) -> None:
+    async def test_logout_revokes_refresh(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         login = await client.post(
             "/api/v1/auth/login",
             json={"email": active_user.email, "password": "UserPass123"},

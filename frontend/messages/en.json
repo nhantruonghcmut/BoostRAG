@@ -114,5 +114,88 @@
       "required": "Full name is required.",
       "maxLength": "Full name cannot exceed 150 characters."
     }
+  },
+  "admin": {
+    "title": "Admin",
+    "nav": {
+      "dashboard": "Dashboard",
+      "documents": "Documents"
+    },
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Manage documents, users, and system configuration.",
+      "documentsCard": {
+        "title": "Document management",
+        "description": "Upload files, assign level + group permissions, and track ingestion status.",
+        "action": "Open documents"
+      }
+    },
+    "documents": {
+      "pageTitle": "Document management",
+      "pageDescription": "Upload and configure document access for the RAG system.",
+      "upload": {
+        "title": "Upload document",
+        "description": "Choose a file and set ACL before ingestion.",
+        "dropzone": "Drag and drop a file here or click to browse",
+        "dropzoneHint": "PDF, DOCX, TXT, and supported formats",
+        "requiredLevel": "Required level",
+        "levelOption": "Level {level}",
+        "allowedGroups": "Allowed groups",
+        "groupsPlaceholder": "HR, Finance, Manager",
+        "groupsHint": "Comma-separated. Leave empty for level-only access.",
+        "submit": "Upload",
+        "success": "Document submitted for processing.",
+        "error": "Upload failed.",
+        "noFile": "Please select a file before uploading."
+      },
+      "table": {
+        "title": "Documents",
+        "total": "{count} documents",
+        "loading": "Loading...",
+        "error": "Could not load documents.",
+        "empty": "No documents yet.",
+        "refresh": "Refresh",
+        "noGroups": "—",
+        "columns": {
+          "name": "Name",
+          "status": "Status",
+          "size": "Size",
+          "level": "Level",
+          "groups": "Groups",
+          "actions": "Actions"
+        }
+      },
+      "status": {
+        "PENDING": "Pending",
+        "PARSING": "Parsing",
+        "CHUNKING": "Chunking",
+        "EMBEDDING": "Embedding",
+        "READY": "Ready",
+        "FAILED": "Failed"
+      },
+      "actions": {
+        "editAcl": "Edit ACL",
+        "reindex": "Reindex",
+        "delete": "Delete",
+        "cancel": "Cancel"
+      },
+      "acl": {
+        "title": "Edit ACL",
+        "description": "Update permissions for \"{name}\".",
+        "descriptionGeneric": "Update document permissions.",
+        "save": "Save ACL",
+        "success": "ACL updated.",
+        "error": "Failed to update ACL."
+      },
+      "delete": {
+        "confirm": "Delete \"{name}\"? This cannot be undone.",
+        "success": "Document deleted.",
+        "error": "Failed to delete document."
+      },
+      "reindex": {
+        "success": "Reindex started.",
+        "error": "Reindex failed."
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ validators. Naming: PascalCase singular class, snake_case plural table.
 """
 
 from app.models.base import Base
+from app.models.document import Document, DocumentChunk, DocumentStatus
 from app.models.user import (
     Group,
     RevokedToken,
@@ -16,6 +17,9 @@ from app.models.user import (
 
 __all__ = [
     "Base",
+    "Document",
+    "DocumentChunk",
+    "DocumentStatus",
     "Group",
     "RevokedToken",
     "User",

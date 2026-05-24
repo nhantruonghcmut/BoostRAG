@@ -125,8 +125,10 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["S101", "PLR2004", "S105", "S106", "S311"]
+"tests/**/*.py" = ["S101", "PLR2004", "S105", "S106", "S311", "SIM117"]
 "app/scripts/**/*.py" = ["T201"]   # CLI scripts can print
+"app/rag/ingestion/chunker.py" = ["B023", "SIM113"]
+"app/services/document_service.py" = ["S110", "SIM102"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["app"]
@@ -148,7 +150,7 @@ module = ["app.scripts.*"]
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = ["passlib.*", "jose.*", "celery.*", "slowapi.*", "litellm.*", "qdrant_client.*", "minio.*", "magic.*", "langdetect.*"]
+module = ["passlib.*", "jose.*", "celery.*", "slowapi.*", "litellm.*", "qdrant_client.*", "minio.*", "magic.*", "langdetect.*", "openpyxl.*"]
 ignore_missing_imports = true
 
 # ─────────────────────────────────────────────────────────────────────────────

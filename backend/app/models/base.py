@@ -20,7 +20,9 @@ class Base(DeclarativeBase):
 class UUIDPKMixin:
     """Primary key UUID v4."""
 
-    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
+    id: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True), primary_key=True, default=uuid4
+    )
 
 
 class TimestampMixin:

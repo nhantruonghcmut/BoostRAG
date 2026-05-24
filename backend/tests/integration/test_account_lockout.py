@@ -9,7 +9,9 @@ from app.models.user import User
 
 
 class TestLockout:
-    async def test_lockout_after_threshold(self, client: AsyncClient, active_user: User) -> None:
+    async def test_lockout_after_threshold(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         attempts = settings.max_failed_login_attempts
         # Trigger N fail logins
         for _ in range(attempts):

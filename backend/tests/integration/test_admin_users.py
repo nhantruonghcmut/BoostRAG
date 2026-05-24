@@ -31,7 +31,9 @@ class TestAdminUserList:
         assert admin_user.email in emails
         assert active_user.email in emails
 
-    async def test_non_admin_cannot_list(self, client: AsyncClient, active_user: User) -> None:
+    async def test_non_admin_cannot_list(
+        self, client: AsyncClient, active_user: User
+    ) -> None:
         login = await client.post(
             "/api/v1/auth/login",
             json={"email": active_user.email, "password": "UserPass123"},

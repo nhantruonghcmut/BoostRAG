@@ -79,7 +79,11 @@ async def login(
     request: Request,
 ) -> LoginResponse:
     """Xác thực + cấp access token (body) + refresh token (httpOnly cookie)."""
-    user, (access_token, expires_in), (refresh_token, _jti, _exp) = await auth_service.authenticate(
+    (
+        user,
+        (access_token, expires_in),
+        (refresh_token, _jti, _exp),
+    ) = await auth_service.authenticate(
         db,
         email=payload.email,
         password=payload.password,

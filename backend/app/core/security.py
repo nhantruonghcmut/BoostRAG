@@ -139,7 +139,9 @@ def decode_token(token: str, expected_type: TokenType | None = None) -> dict[str
         TokenInvalidError: signature sai, claims thiếu, hoặc type mismatch.
     """
     try:
-        payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+        payload = jwt.decode(
+            token, settings.jwt_secret, algorithms=[settings.jwt_algorithm]
+        )
     except JWTError as e:
         if "expired" in str(e).lower():
             raise TokenExpiredError("Token expired") from e

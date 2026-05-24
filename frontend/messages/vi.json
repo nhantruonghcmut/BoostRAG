@@ -114,5 +114,88 @@
       "required": "Vui lòng nhập họ tên.",
       "maxLength": "Họ tên không quá 150 ký tự."
     }
+  },
+  "admin": {
+    "title": "Quản trị",
+    "nav": {
+      "dashboard": "Bảng điều khiển",
+      "documents": "Tài liệu"
+    },
+    "dashboard": {
+      "title": "Bảng điều khiển Admin",
+      "subtitle": "Quản lý tài liệu, người dùng và cấu hình hệ thống.",
+      "documentsCard": {
+        "title": "Quản lý tài liệu",
+        "description": "Upload file, phân quyền theo level + group, theo dõi trạng thái ingestion.",
+        "action": "Mở quản lý tài liệu"
+      }
+    },
+    "documents": {
+      "pageTitle": "Quản lý tài liệu",
+      "pageDescription": "Upload và phân quyền tài liệu cho hệ thống RAG.",
+      "upload": {
+        "title": "Upload tài liệu",
+        "description": "Chọn file và thiết lập ACL trước khi ingest.",
+        "dropzone": "Kéo thả file vào đây hoặc bấm để chọn",
+        "dropzoneHint": "PDF, DOCX, TXT và các định dạng được hỗ trợ",
+        "requiredLevel": "Cấp độ yêu cầu",
+        "levelOption": "Level {level}",
+        "allowedGroups": "Nhóm được phép",
+        "groupsPlaceholder": "HR, Finance, Manager",
+        "groupsHint": "Phân tách bằng dấu phẩy. Để trống = mọi group có đủ level đều truy cập được.",
+        "submit": "Upload",
+        "success": "Tài liệu đã được gửi xử lý.",
+        "error": "Upload thất bại.",
+        "noFile": "Vui lòng chọn file trước khi upload."
+      },
+      "table": {
+        "title": "Danh sách tài liệu",
+        "total": "{count} tài liệu",
+        "loading": "Đang tải...",
+        "error": "Không tải được danh sách tài liệu.",
+        "empty": "Chưa có tài liệu nào.",
+        "refresh": "Làm mới",
+        "noGroups": "—",
+        "columns": {
+          "name": "Tên",
+          "status": "Trạng thái",
+          "size": "Kích thước",
+          "level": "Level",
+          "groups": "Groups",
+          "actions": "Thao tác"
+        }
+      },
+      "status": {
+        "PENDING": "Chờ xử lý",
+        "PARSING": "Đang parse",
+        "CHUNKING": "Đang chunk",
+        "EMBEDDING": "Đang embed",
+        "READY": "Sẵn sàng",
+        "FAILED": "Lỗi"
+      },
+      "actions": {
+        "editAcl": "Sửa ACL",
+        "reindex": "Reindex",
+        "delete": "Xóa",
+        "cancel": "Huỷ"
+      },
+      "acl": {
+        "title": "Chỉnh sửa ACL",
+        "description": "Cập nhật phân quyền cho \"{name}\".",
+        "descriptionGeneric": "Cập nhật phân quyền tài liệu.",
+        "save": "Lưu ACL",
+        "success": "ACL đã được cập nhật.",
+        "error": "Cập nhật ACL thất bại."
+      },
+      "delete": {
+        "confirm": "Xóa tài liệu \"{name}\"? Hành động này không thể hoàn tác.",
+        "success": "Tài liệu đã được xóa.",
+        "error": "Xóa tài liệu thất bại."
+      },
+      "reindex": {
+        "success": "Reindex đã được khởi chạy.",
+        "error": "Reindex thất bại."
+      }
+    }
   }
 }
